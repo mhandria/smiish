@@ -1,0 +1,21 @@
+PODS:
+  - APExtensions/ViewState (4.5.0)
+  - KeyboardAvoidingView (2.2.4):
+    - APExtensions/ViewState (>= 4.5.0)
+  - Socket.IO-Client-Swift (13.1.2):
+    - Starscream (~> 3.0.2)
+  - Starscream (3.0.4)
+
+DEPENDENCIES:
+  - KeyboardAvoidingView (~> 2.2)
+  - Socket.IO-Client-Swift (~> 13.1.0)
+
+SPEC CHECKSUMS:
+  APExtensions: fb4a458bdd8230f9c2c0c95927397a634e179872
+  KeyboardAvoidingView: 61a8338183ecd7b89d7d0b4e0ea373fdd5d8db5e
+  Socket.IO-Client-Swift: 010d2f464bdd1849b859c0cd0500d68194401ac8
+  Starscream: f5da93fe6984c77b694366bf7299b7dc63a76f26
+
+PODFILE CHECKSUM: f384375563def30af49ca1f18742ffc6b4ba4d70
+
+COCOAPODS: 1.4.0

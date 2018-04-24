@@ -1,0 +1,5 @@
+target 'Smiish' do
+  use_frameworks!
+   pod 'Socket.IO-Client-Swift', '~> 13.1.0'
+   pod "KeyboardAvoidingView", '~> 2.2'
+end
