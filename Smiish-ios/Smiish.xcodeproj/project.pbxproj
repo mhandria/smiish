@@ -14,11 +14,11 @@
 		D12BDA5B20672CC000CBA2F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D12BDA5A20672CC000CBA2F6 /* Assets.xcassets */; };
 		D12BDA5E20672CC000CBA2F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D12BDA5C20672CC000CBA2F6 /* LaunchScreen.storyboard */; };
 		D12BDA6620672E1900CBA2F6 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA6520672E1900CBA2F6 /* Socket.swift */; };
-		D12BDA6A20673D4400CBA2F6 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D12BDA682067362600CBA2F6 /* Pacifico-Regular.ttf */; };
 		D12BDA6C206772D800CBA2F6 /* JoinField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA6B206772D800CBA2F6 /* JoinField.swift */; };
 		D12BDA6E20696C6D00CBA2F6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA6D20696C6D00CBA2F6 /* ChatViewController.swift */; };
 		D12BDA7020699EAD00CBA2F6 /* ChatField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA6F20699EAD00CBA2F6 /* ChatField.swift */; };
 		D12BDA72206AF74200CBA2F6 /* MessageCellWithName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA71206AF74200CBA2F6 /* MessageCellWithName.swift */; };
+		D16EE5DD208FB26900685527 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D16EE5DC208FB26900685527 /* Pacifico-Regular.ttf */; };
 		D1739926206C454C00319F26 /* MessageCellNoName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1739925206C454C00319F26 /* MessageCellNoName.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,11 +33,11 @@
 		D12BDA5D20672CC000CBA2F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D12BDA5F20672CC000CBA2F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D12BDA6520672E1900CBA2F6 /* Socket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
-		D12BDA682067362600CBA2F6 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Pacifico-Regular.ttf"; path = "/Users/michaelhandria/Developer/Smiish/Smiish/font/Pacifico-Regular.ttf"; sourceTree = "<absolute>"; };
 		D12BDA6B206772D800CBA2F6 /* JoinField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinField.swift; sourceTree = "<group>"; };
 		D12BDA6D20696C6D00CBA2F6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D12BDA6F20699EAD00CBA2F6 /* ChatField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatField.swift; sourceTree = "<group>"; };
 		D12BDA71206AF74200CBA2F6 /* MessageCellWithName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellWithName.swift; sourceTree = "<group>"; };
+		D16EE5DC208FB26900685527 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pacifico-Regular.ttf"; sourceTree = "<group>"; };
 		D1739925206C454C00319F26 /* MessageCellNoName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellNoName.swift; sourceTree = "<group>"; };
 		D6A4AD3B8E3F04AD4D5AB4FE /* Pods-Smiish.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smiish.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smiish/Pods-Smiish.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -109,7 +109,7 @@
 		D12BDA67206735EC00CBA2F6 /* font */ = {
 			isa = PBXGroup;
 			children = (
-				D12BDA682067362600CBA2F6 /* Pacifico-Regular.ttf */,
+				D16EE5DC208FB26900685527 /* Pacifico-Regular.ttf */,
 			);
 			path = font;
 			sourceTree = "<group>";
@@ -212,9 +212,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D12BDA5E20672CC000CBA2F6 /* LaunchScreen.storyboard in Resources */,
-				D12BDA6A20673D4400CBA2F6 /* Pacifico-Regular.ttf in Resources */,
 				D12BDA5B20672CC000CBA2F6 /* Assets.xcassets in Resources */,
 				D12BDA5920672CC000CBA2F6 /* Main.storyboard in Resources */,
+				D16EE5DD208FB26900685527 /* Pacifico-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
