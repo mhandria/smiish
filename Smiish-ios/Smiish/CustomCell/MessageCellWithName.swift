@@ -24,8 +24,12 @@ class MessageCellWithName: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func setCell(name: String, msg: String, senderName: String){
-        self.senderName.text = name
+    func setCell(name: String?, msg: String, senderName: String){
+        if(name == nil){
+            self.senderName = nil
+        }else{
+            self.senderName.text = name
+        }
         self.message.text = msg
         
         if(name == senderName){

@@ -51,7 +51,7 @@ class ChatViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(ChatViewController.goBack))
         rightSwipeBack.direction = .right
-        view.addGestureRecognizer(rightSwipeBack)
+        tableView.addGestureRecognizer(rightSwipeBack)
         
         sendButton.layer.cornerRadius = 12
         
@@ -61,9 +61,9 @@ class ChatViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: tableView, action: #selector(ChatViewController.dismissKeyboard))
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatViewController.dismissKeyboard))
         
-        view.addGestureRecognizer(tap)
+        tableView.addGestureRecognizer(tap)
 
         
         //socket event
@@ -78,6 +78,11 @@ class ChatViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @objc override func dismissKeyboard() {
+        view.endEditing(true)
+        tableView.reloadData()
+    }
+
     @objc func goBack(sender: UISwipeGestureRecognizer){
         self.navigationController?.popViewController(animated: true)
     }
@@ -122,19 +127,16 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("\(indexPath.row)\n")
         let messageNew = self.messages[indexPath.row]
+        self.displayName = (indexPath.row == 0)
         if(indexPath.row > 0){
-            self.displayName = (self.lastSender != messageNew.name)
+            self.displayName = (self.messages[indexPath.row-1].name != messageNew.name)
         }
-        
-        self.lastSender = messageNew.name
-        
-        
         if(self.displayName){
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CellView") as! MessageCellWithName
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellView", for: indexPath) as! MessageCellWithName
             cell.setCell(name: messageNew.name, msg: messageNew.message, senderName: self.userName)
             return cell
         }else{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CellViewNoName") as! MessageCellNoName
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CellViewNoName", for: indexPath) as! MessageCellNoName
             cell.setCell(name: messageNew.name, msg: messageNew.message, senderName: self.userName)
             return cell
         }
