@@ -17,16 +17,17 @@ class LoginViewController: UIViewController{
     @IBOutlet weak var roomField: JoinField!
     
     @IBOutlet weak var joinButton: UIButton!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        Socket.default.establishConnection()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
-        
         joinButton.layer.cornerRadius = 12
-        Socket.default.establishConnection()
-        //Looks for single or multiple taps.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
-        
     }
     
     override func didReceiveMemoryWarning() {

@@ -17,10 +17,12 @@ struct Messages{
         self.message = message
     }
 }
+
 class ChatViewController: UIViewController {
     
     var userName: String = ""
     var roomName: String = ""
+    
     var displayName: Bool = true
     private var lastSender: String = ""
     var messages = [Messages]()
@@ -30,6 +32,20 @@ class ChatViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var msgContent: ChatField!
+    
+    init(){
+        super.init(nibName: nil, bundle: nil)
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        Socket.default.socket.emit("Join Room", roomName)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = true
@@ -44,12 +60,8 @@ class ChatViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-    
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatViewController.dismissKeyboard))
-        
-        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
-        //tap.cancelsTouchesInView = false
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: tableView, action: #selector(ChatViewController.dismissKeyboard))
         
         view.addGestureRecognizer(tap)
 
@@ -67,17 +79,21 @@ class ChatViewController: UIViewController {
     }
     
     @objc func goBack(sender: UISwipeGestureRecognizer){
-        
         self.navigationController?.popViewController(animated: true)
     }
     
     func insertMsgArray(name: String, msg: String){
-        //displayName = !(lastSender == name)
-        //lastSender = name
         lastSender = ""
         displayName = true
         messages.append(Messages(name: name, message: msg))
         tableView.reloadData()
+        
+        //perform this asyncronously
+        DispatchQueue.main.async {
+            //get an index path (last row) then scroll to bottom of added msg.
+            let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -86,8 +102,6 @@ class ChatViewController: UIViewController {
     
     @IBAction func sendMsg(_ sender: UIButton) {
         Socket.default.socket.emit("Chat Message", self.roomName, self.userName, msgContent.text)
-        //for physical device testing if server is not up
-        //insertMsgArray(name: userName, msg: msgContent.text)
         msgContent.text = ""
         view.endEditing(true)
     }
@@ -106,11 +120,14 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("\(indexPath.row)\n")
         let messageNew = self.messages[indexPath.row]
         if(indexPath.row > 0){
             self.displayName = (self.lastSender != messageNew.name)
         }
+        
         self.lastSender = messageNew.name
+        
         
         if(self.displayName){
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellView") as! MessageCellWithName
