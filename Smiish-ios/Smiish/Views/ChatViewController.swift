@@ -48,12 +48,15 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.isNavigationBarHidden = true
+        //Show Navigation Controller in Chat VC
+        self.navigationController?.isNavigationBarHidden = false
         let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(ChatViewController.goBack))
         rightSwipeBack.direction = .right
+        
         tableView.addGestureRecognizer(rightSwipeBack)
         
         sendButton.layer.cornerRadius = 12
+        sendButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 12)
         
         
         //give table delegate.
@@ -111,8 +114,6 @@ class ChatViewController: UIViewController {
         view.endEditing(true)
     }
     
-    
-
 }
 
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource{

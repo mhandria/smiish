@@ -72,7 +72,7 @@ class JoinField: UITextField, UITextFieldDelegate {
             leftViewMode = .always
             let leftImageView = UIImageView(frame: CGRect(x: leftPadding, y: 0.0, width: 20, height: 20))
             leftImageView.image = image
-            let width = leftPadding + 20
+            let width = leftPadding + 25
             let view = UIView(frame: CGRect(x: 0, y: 0, width: width, height: 20))
             view.addSubview(leftImageView)
             
