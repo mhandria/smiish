@@ -78,7 +78,7 @@ class ChatViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    @objc override func dismissKeyboard() {
+    @objc func dismissKeyboard() {
         view.endEditing(true)
         tableView.reloadData()
     }
