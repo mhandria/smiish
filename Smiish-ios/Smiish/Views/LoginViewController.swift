@@ -3,6 +3,7 @@
 //  Smiish
 //
 //  Created by Michael Handria on 3/24/18.
+//  Modified by Ethan Park 4/28/18
 //  Copyright © 2018 Michael Handria. All rights reserved.
 //
 
@@ -11,23 +12,78 @@ import SocketIO
 
 class LoginViewController: UIViewController{
 
-    @IBOutlet weak var loginLogo: UILabel!
-
     @IBOutlet weak var nameField: JoinField!
     @IBOutlet weak var roomField: JoinField!
     
     @IBOutlet weak var joinButton: UIButton!
     
+    //Create UILabel Login Logo
+    let loginLogo = UIImageView(image: #imageLiteral(resourceName: "smiish_Logo"))
+    
+    //Add Login Logo Image
+    //let loginLogoImg = UIImageView(image: #imageLiteral(resourceName: "smiish_splash_logo"))
+    
     override func viewDidAppear(_ animated: Bool) {
         Socket.default.establishConnection()
     }
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*
+        SMIISH LOGO IMAGE
+         */
+        view.addSubview(loginLogo)
+        
+        //Add constraints for SMIISH LOGO
+        loginLogo.translatesAutoresizingMaskIntoConstraints = false
+        loginLogo.centerXAnchor.constraint(equalTo: loginLogo.superview!.centerXAnchor).isActive = true
+        loginLogo.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 20)
+        loginLogo.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -50).isActive = true
+        
+        //Add constraints for User Name
+        nameField.translatesAutoresizingMaskIntoConstraints = false
+        nameField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        nameField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
+        nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        nameField.centerXAnchor.constraint(equalTo: nameField.superview!.centerXAnchor).isActive = true
+        nameField.topAnchor.constraint(equalTo: loginLogo.bottomAnchor,constant: 20).isActive = true
+        nameField.bottomAnchor.constraint(equalTo: roomField.topAnchor, constant: -20).isActive = true
+        
+        //Add Constraints for Room Name
+        roomField.translatesAutoresizingMaskIntoConstraints = false
+        roomField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        roomField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
+        roomField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        roomField.centerXAnchor.constraint(equalTo: roomField.superview!.centerXAnchor).isActive = true
+        roomField.topAnchor.constraint(equalTo: nameField.bottomAnchor,constant: -20).isActive = true
+        roomField.bottomAnchor.constraint(equalTo: joinButton.topAnchor, constant: -20).isActive = true
+        //Add Constraints for Join Button
+        joinButton.translatesAutoresizingMaskIntoConstraints = false
+        joinButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        joinButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
+        joinButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
+        joinButton.centerXAnchor.constraint(equalTo: joinButton.superview!.centerXAnchor).isActive = true
+        joinButton.topAnchor.constraint(equalTo: roomField.bottomAnchor).isActive = true
+        
+        
+        
+        
+        
+        //Hid the Navigation Controller Bar
         self.navigationController?.isNavigationBarHidden = true
-        joinButton.layer.cornerRadius = 12
+        
+        //Create Tap Gesture to dismiss Keyboard when tapped.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
+        
+        //Make button borner Radius 12
+        joinButton.layer.cornerRadius = 12
+        joinButton.setTitle("Join", for: .normal);
+        joinButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 20)
+    
     }
     
     override func didReceiveMemoryWarning() {

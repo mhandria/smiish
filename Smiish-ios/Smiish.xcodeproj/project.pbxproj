@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		29E4D58CF038D2647850EDBC /* Pods_Smiish.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E46844E602393B8571C24F8 /* Pods_Smiish.framework */; };
+		36F0C53F209818C000BC80E3 /* DoHyeon-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 36F0C53E209818C000BC80E3 /* DoHyeon-Regular.ttf */; };
 		D12BDA5420672CC000CBA2F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA5320672CC000CBA2F6 /* AppDelegate.swift */; };
 		D12BDA5620672CC000CBA2F6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA5520672CC000CBA2F6 /* LoginViewController.swift */; };
 		D12BDA5920672CC000CBA2F6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D12BDA5720672CC000CBA2F6 /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		36F0C53E209818C000BC80E3 /* DoHyeon-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DoHyeon-Regular.ttf"; sourceTree = "<group>"; };
 		4E46844E602393B8571C24F8 /* Pods_Smiish.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Smiish.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A6F7FF6880A1E01EF0933B1 /* Pods-Smiish.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smiish.release.xcconfig"; path = "Pods/Target Support Files/Pods-Smiish/Pods-Smiish.release.xcconfig"; sourceTree = "<group>"; };
 		D12BDA5020672CC000CBA2F6 /* Smiish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Smiish.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,6 +111,7 @@
 		D12BDA67206735EC00CBA2F6 /* font */ = {
 			isa = PBXGroup;
 			children = (
+				36F0C53E209818C000BC80E3 /* DoHyeon-Regular.ttf */,
 				D16EE5DC208FB26900685527 /* Pacifico-Regular.ttf */,
 			);
 			path = font;
@@ -179,7 +182,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Michael Handria";
 				TargetAttributes = {
 					D12BDA4F20672CC000CBA2F6 = {
@@ -215,6 +218,7 @@
 				D12BDA5B20672CC000CBA2F6 /* Assets.xcassets in Resources */,
 				D12BDA5920672CC000CBA2F6 /* Main.storyboard in Resources */,
 				D16EE5DD208FB26900685527 /* Pacifico-Regular.ttf in Resources */,
+				36F0C53F209818C000BC80E3 /* DoHyeon-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +336,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -339,6 +344,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -389,6 +395,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -396,6 +403,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -432,10 +440,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UPA5YM3F22;
+				DEVELOPMENT_TEAM = KCSX6N6HYG;
 				INFOPLIST_FILE = Smiish/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.handria2.Smiish;
+				PRODUCT_BUNDLE_IDENTIFIER = Smiish.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -450,10 +458,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = UPA5YM3F22;
+				DEVELOPMENT_TEAM = KCSX6N6HYG;
 				INFOPLIST_FILE = Smiish/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.handria2.Smiish;
+				PRODUCT_BUNDLE_IDENTIFIER = Smiish.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

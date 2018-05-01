@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -117,7 +117,7 @@
 		064196D261389419BED1719936055AF8 /* KeyboardAvoidingView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KeyboardAvoidingView-dummy.m"; sourceTree = "<group>"; };
 		077F9506DE4EC1D7F8D74CDC66EAC90D /* Pods-Smiish-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Smiish-dummy.m"; sourceTree = "<group>"; };
 		07D01E803C656B9044326F0BFF7BE1C7 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09CC83FEEBDEF30B23444C961B8A9B41 /* Pods_Smiish.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Smiish.framework; path = "Pods-Smiish.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		09CC83FEEBDEF30B23444C961B8A9B41 /* Pods_Smiish.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Smiish.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BD69B8E8A3AE8D0F83685638FADE21C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D8743E093E8AED747DC3C7136C10BDB /* ViewStateLoader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ViewStateLoader.m; path = APExtensions/Classes/ViewState/ViewStateLoader.m; sourceTree = "<group>"; };
 		1CECC265A3DD596EAEAFF5083ADE0E92 /* SocketAckEmitter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketAckEmitter.swift; path = Source/SocketIO/Ack/SocketAckEmitter.swift; sourceTree = "<group>"; };
@@ -147,13 +147,13 @@
 		72098F6AAC39BC484F2D88CD8EE9453D /* KeyboardAvoidingView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeyboardAvoidingView-umbrella.h"; sourceTree = "<group>"; };
 		771975151A4B7386E72A1FE3D178B56A /* SocketIOClientOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketIOClientOption.swift; path = Source/SocketIO/Client/SocketIOClientOption.swift; sourceTree = "<group>"; };
 		797C85AD95F373C72E61542E41D09EA6 /* SocketLogger.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketLogger.swift; path = Source/SocketIO/Util/SocketLogger.swift; sourceTree = "<group>"; };
-		7E149E919E238CF02FCB263BD699088F /* KeyboardAvoidingView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KeyboardAvoidingView.framework; path = KeyboardAvoidingView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E149E919E238CF02FCB263BD699088F /* KeyboardAvoidingView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KeyboardAvoidingView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EC80A6C11DAE9854A159FDB9D87F1B5 /* SocketIOClientSpec.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketIOClientSpec.swift; path = Source/SocketIO/Client/SocketIOClientSpec.swift; sourceTree = "<group>"; };
 		82AB9EA3223311CC60E9622D17C98C7C /* APExtensions.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = APExtensions.xcconfig; sourceTree = "<group>"; };
 		8355E191911E36C3E1137B7600079892 /* UIResponder+ViewState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIResponder+ViewState.swift"; path = "APExtensions/Classes/ViewState/UIResponder+ViewState.swift"; sourceTree = "<group>"; };
 		868F3AAC8C2E88C90321E4BBE6DBE155 /* SocketPacket.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketPacket.swift; path = Source/SocketIO/Parse/SocketPacket.swift; sourceTree = "<group>"; };
-		8D9929DE012E1F9B27B3BC2B8F314A2C /* APExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = APExtensions.framework; path = APExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8D9929DE012E1F9B27B3BC2B8F314A2C /* APExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = APExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9CEE2F5F36015EA19F526750EB8596BE /* Pods-Smiish.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Smiish.modulemap"; sourceTree = "<group>"; };
 		9D05ECC57E2D2B6829FECD51A5961BC2 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D249B5DC1025EE5ACB9B7ADB5B2D12D /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,7 +181,7 @@
 		CA429E7C207C163942363E3E36F17363 /* SocketIOClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketIOClient.swift; path = Source/SocketIO/Client/SocketIOClient.swift; sourceTree = "<group>"; };
 		CD8BFFDB51BEE2ACF46BDB0066DC5634 /* ViewStateLoader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ViewStateLoader.h; path = APExtensions/Classes/ViewState/ViewStateLoader.h; sourceTree = "<group>"; };
 		D0FB6FE49E53EA50B6CCE36116CD73CF /* UIView+ViewState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIView+ViewState.swift"; path = "APExtensions/Classes/ViewState/UIView+ViewState.swift"; sourceTree = "<group>"; };
-		D129AE0ED354E9090339E7DF2C8F80A6 /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Starscream.framework; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D129AE0ED354E9090339E7DF2C8F80A6 /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D19F35E6C719C9558F36926AEDD1C9B1 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/MessageUI.framework; sourceTree = DEVELOPER_DIR; };
 		D27F0EC6FA125C469708275CCA4B2DD8 /* SocketExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketExtensions.swift; path = Source/SocketIO/Util/SocketExtensions.swift; sourceTree = "<group>"; };
 		D35155CD424E45B06303ED8750E63F65 /* SocketIOClientConfiguration.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketIOClientConfiguration.swift; path = Source/SocketIO/Client/SocketIOClientConfiguration.swift; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		D4030C1F39793C129D3031D46D64BEDF /* KeyboardAvoidingViewLoader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KeyboardAvoidingViewLoader.m; path = KeyboardAvoidingView/Classes/KeyboardAvoidingViewLoader.m; sourceTree = "<group>"; };
 		D755FB44D792C7638AA3CB37FC4C519C /* WebSocket.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = Sources/WebSocket.swift; sourceTree = "<group>"; };
 		DD4EB58EE42E12FB137EA6C21547254C /* Socket.IO-Client-Swift-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Socket.IO-Client-Swift-prefix.pch"; sourceTree = "<group>"; };
-		DEF5055B274974D9D0AD761FF90B9D47 /* SocketIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SocketIO.framework; path = "Socket.IO-Client-Swift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEF5055B274974D9D0AD761FF90B9D47 /* SocketIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SocketIO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0BEB6B581BFD738F0DE5341613EC29B /* KeyboardAvoidingView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KeyboardAvoidingView-prefix.pch"; sourceTree = "<group>"; };
 		E2206D2F635C88B7AA8A63A9817C7D5F /* Pods-Smiish.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Smiish.release.xcconfig"; sourceTree = "<group>"; };
 		F718389F9DE3EDC5614F7F1B7020EEAC /* UIScrollView+ViewState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UIScrollView+ViewState.swift"; path = "APExtensions/Classes/ViewState/UIScrollView+ViewState.swift"; sourceTree = "<group>"; };
@@ -354,7 +354,6 @@
 				3915D5D51DFBAE0B57C17C617DF1FB12 /* SSLSecurity.swift */,
 				9F0B478BDDA941F279250C728D247904 /* Support Files */,
 			);
-			name = "Socket.IO-Client-Swift";
 			path = "Socket.IO-Client-Swift";
 			sourceTree = "<group>";
 		};
@@ -392,7 +391,6 @@
 				D755FB44D792C7638AA3CB37FC4C519C /* WebSocket.swift */,
 				E3E752ED437A6133E12AC3258BFA7367 /* Support Files */,
 			);
-			name = Starscream;
 			path = Starscream;
 			sourceTree = "<group>";
 		};
@@ -410,7 +408,6 @@
 				0D4818EDA94F660A2866E397ECFD4A83 /* Support Files */,
 				ED64DC35AAAE360D29DE74C7B4E0A65F /* ViewState */,
 			);
-			name = APExtensions;
 			path = APExtensions;
 			sourceTree = "<group>";
 		};
@@ -424,7 +421,6 @@
 				AAA90763E8A519686AF0E2BB76B51E67 /* UIView+Utils.swift */,
 				3D4F1D72003C61FED5F29764B01D2C39 /* Support Files */,
 			);
-			name = KeyboardAvoidingView;
 			path = KeyboardAvoidingView;
 			sourceTree = "<group>";
 		};
@@ -612,6 +608,12 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
 				LastUpgradeCheck = 0930;
+				TargetAttributes = {
+					A6EAB931A714AD2CD2086A01D3828F82 = {
+						DevelopmentTeam = KCSX6N6HYG;
+						ProvisioningStyle = Automatic;
+					};
+				};
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -852,12 +854,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82AB9EA3223311CC60E9622D17C98C7C /* APExtensions.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = KCSX6N6HYG;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -868,6 +872,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/APExtensions/APExtensions.modulemap";
 				PRODUCT_NAME = APExtensions;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
@@ -884,12 +889,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 82AB9EA3223311CC60E9622D17C98C7C /* APExtensions.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = KCSX6N6HYG;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -900,6 +907,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = "Target Support Files/APExtensions/APExtensions.modulemap";
 				PRODUCT_NAME = APExtensions;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
