@@ -24,8 +24,6 @@ class LoginViewController: UIViewController{
     //Add Login Logo Image
     //let loginLogoImg = UIImageView(image: #imageLiteral(resourceName: "smiish_splash_logo"))
 
-
-
     override func viewDidAppear(_ animated: Bool) {
         Socket.default.establishConnection()
     }
@@ -70,6 +68,9 @@ class LoginViewController: UIViewController{
 
         //Add Standard Constraint without KeyBoard
         configureLayout()
+        
+        //Add Styling 
+        styleViews()
 
         //Hid the Navigation Controller Bar
         self.navigationController?.isNavigationBarHidden = true
@@ -127,10 +128,15 @@ class LoginViewController: UIViewController{
     }
 
     private func styleViews(){
+        
+        //Add Font style to Place holder for Name and Room Field
+        
+        
         //Make button borner Radius 12
         joinButton.layer.cornerRadius = 12
         joinButton.setTitle("Join", for: .normal);
         joinButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 20)
+        
     }
 
     private func configureLayout(){
@@ -157,11 +163,6 @@ class LoginViewController: UIViewController{
         roomField.centerXAnchor.constraint(equalTo: roomField.superview!.centerXAnchor).isActive = true
         roomField.topAnchor.constraint(equalTo: nameField.bottomAnchor,constant: -20).isActive = true
         roomField.bottomAnchor.constraint(equalTo: joinButton.topAnchor, constant: -10).isActive = true
-        //Add Constraints for Join Button
-        //Make button borner Radius 12
-        joinButton.layer.cornerRadius = 12
-        joinButton.setTitle("Join", for: .normal);
-        joinButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 20)
 
         joinButton.translatesAutoresizingMaskIntoConstraints = false
         joinButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
