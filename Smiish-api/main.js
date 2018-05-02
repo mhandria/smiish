@@ -24,15 +24,13 @@ $(function() {
   var roomName;
   var connected = false;
   var $currentInput = $usernameInput.focus();
-
+  var clientList = [];
   var socket = io();
 
 
   // FUNCTIONS
 
   function addParticipantsMessage (data) {
-    console.log(data);
-    console.log("addmess");
     var message = '';
     if (data.numUsers === 1) {
       message += "there's 1 participant";
@@ -47,11 +45,27 @@ $(function() {
     var message = $inputMessage.val();
     // Prevent markup from being injected into the message
     message = cleanInput(message);
+
+    //Get system time in milliseconds
+    var ts = Math.round((new Date()).getTime());
+
+    // Create a new JavaScript Date object based on the timestamp
+    var date = new Date(ts);
+
+    // Get Hours, Miutes, and Seconds parts from the timestamp
+    var hours = date.getHours();
+    var minutes = "0" + date.getMinutes();
+    var seconds = "0" + date.getSeconds();
+
+    // Will display time in 10:30:23 format
+    var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
+
     // if there is a non-empty message and a socket connection
     if (message && connected) {
       $inputMessage.val('');
       addChatMessage({
         username: username,
+        systemTime: formattedTime,
         message: message
       });
       // tell server to execute 'new message' and send along one parameter
@@ -74,9 +88,8 @@ $(function() {
     //   options.fade = false;
     //   $typingMessages.remove();
     // }
-
     var $usernameDiv = $('<span class="username"/>')
-      .text(data.username)
+      .text(data.systemTime + " " + data.username)
       .css('color', getUsernameColor(data.username));
     var $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message);
@@ -202,23 +215,51 @@ $(function() {
     return $('<div/>').text(input).html();
   }
 
-  //CLIENT LISTENING FROM SERVER
+  //Debug purposes
+  function addUser(username){
+    console.log(username);
+    clientList.push(username);
+    console.log(clientList);
+  };
+
+  //CLIENTS LISTENING FROM SERVER
 
   //Whenever the server emits 'login' this listens and executes
   socket.on('user join', function(data){
     connected = true;
+    console.log(data);
     // Display the welcome message
     var message = "Welcome to " + data.roomName;
     log(message, {
       prepend: true
     });
-     addParticipantsMessage(data);
+    addParticipantsMessage(data);
+
+    //Emit to server to get list of all clients in same room
+    socket.emit('clients in room');
+  });
+
+  //Whenver the server emits 'get clients', this listens and executes
+  //Clients will emit 'present' to confirm presence in room
+  socket.on('get clients', function(){
+    //clear clientList for each client
+    clientList = [];
+
+    socket.emit('present', {
+      username: username
+    });
+  });
+
+  //Whenever the server emits 'client response', this listens and executes
+  //Each client will append all clients in room
+  socket.on('client response', function(data){
+    //add other clients to new user clientList
+    // clientList.push(data.username);
+    addUser(data.username);
   });
 
   //Whenever the server emits 'user joined', log it in the header
-  socket.on('new user', function (data) {
-    console.log("new user");
-    console.log(data);
+  socket.on('new user', function(data) {
     log(data.username + ' joined');
     addParticipantsMessage(data);
   });
@@ -229,7 +270,7 @@ $(function() {
   });
 
   // Whenever the server emits 'user left', log it in the chat body
-  socket.on('user left', function (data) {
+  socket.on('user left', function(data) {
     log(data.username + ' left');
     addParticipantsMessage(data);
     // removeChatTyping(data);
