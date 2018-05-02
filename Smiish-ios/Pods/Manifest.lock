@@ -5,17 +5,20 @@ PODS:
   - Socket.IO-Client-Swift (13.1.2):
     - Starscream (~> 3.0.2)
   - Starscream (3.0.4)
+  - Toaster (2.1.1)
 
 DEPENDENCIES:
   - KeyboardAvoidingView (~> 2.2)
   - Socket.IO-Client-Swift (~> 13.1.0)
+  - Toaster
 
 SPEC CHECKSUMS:
   APExtensions: fb4a458bdd8230f9c2c0c95927397a634e179872
   KeyboardAvoidingView: 61a8338183ecd7b89d7d0b4e0ea373fdd5d8db5e
   Socket.IO-Client-Swift: 010d2f464bdd1849b859c0cd0500d68194401ac8
   Starscream: f5da93fe6984c77b694366bf7299b7dc63a76f26
+  Toaster: a6c9532de1ded8105e77376f7dffeb2e12b46dbb
 
-PODFILE CHECKSUM: f384375563def30af49ca1f18742ffc6b4ba4d70
+PODFILE CHECKSUM: 94bb275029014e272899a9f91fbdfabf179a01f8
 
 COCOAPODS: 1.4.0

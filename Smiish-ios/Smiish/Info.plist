@@ -39,6 +39,7 @@
 	</dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>DoHyeon-Regular.ttf</string>
 		<string>Pacifico-Regular.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
