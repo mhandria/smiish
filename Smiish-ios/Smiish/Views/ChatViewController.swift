@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 //struct to hold the message data coming in
 struct Messages{
@@ -19,12 +20,16 @@ struct Messages{
     }
 }
 
-class ChatViewController: UIViewController {
+class ChatViewController: UIViewController{
     
     //holds the app user's data of roomname that
     //he/she is in and the username he/she selected
     var userName: String = ""
     var roomName: String = ""
+    open static var messageBadge: Int = 0
+    
+    let center = UNUserNotificationCenter.current()
+    let notification = UNMutableNotificationContent()
     
     var messages = [Messages]()
     
@@ -45,23 +50,31 @@ class ChatViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    
+
     override func viewDidAppear(_ animated: Bool) {
         Socket.default.socket.emit("Join Room", roomName)
+        ChatViewController.messageBadge = 0
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //reset badge for notifications
+        ChatViewController.messageBadge = 0
+        
+        
         //Show Navigation Controller in Chat VC
         self.navigationController?.isNavigationBarHidden = false
         let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(ChatViewController.goBack))
         rightSwipeBack.direction = .right
         
+        
         tableView.addGestureRecognizer(rightSwipeBack)
+        
         
         sendButton.layer.cornerRadius = 12
         sendButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 12)
@@ -69,13 +82,13 @@ class ChatViewController: UIViewController {
         
         //give table delegate.
         //basically allows the tableView utilize the
-        //extension code written below 
+        //extension code written below
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
         
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatViewController.dismissKeyboard))
         
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatViewController.dismissKeyboard))
         tableView.addGestureRecognizer(tap)
 
         
@@ -87,6 +100,7 @@ class ChatViewController: UIViewController {
             
             //if the name is self then don't append it to view.
             self.insertMsgArray(name: name, msg: msg)
+            
         }
         // Do any additional setup after loading the view.
     }
@@ -105,7 +119,7 @@ class ChatViewController: UIViewController {
         function is called as a swipe left gesture
         this will pop the current view and bring user to
         the last view before going to this view
-        - basically a go back button
+        -> basically a go back button
      params:
         sender - swipe left gesture.
     */
@@ -123,6 +137,10 @@ class ChatViewController: UIViewController {
         msg - content to be displayed "user message"
     */
     func insertMsgArray(name: String, msg: String){
+        
+        //function to notify users
+        notifyUsers(name: name, msg: msg)
+        
         //append on the message array when the user sends a message
         messages.append(Messages(name: name, message: msg))
         
@@ -136,6 +154,27 @@ class ChatViewController: UIViewController {
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
         
+    }
+    
+    /*
+     summary:
+        function will notify users, if users enters app in background mode, that a notification
+        is comming in
+     params:
+        name - username
+        msg - text content to notify the user with.
+     */
+    func notifyUsers(name: String, msg: String){
+        let status = UIApplication.shared.applicationState
+        if status.rawValue == 2{
+            ChatViewController.messageBadge = ChatViewController.messageBadge + 1
+            notification.title = name
+            notification.body = msg
+            notification.badge = NSNumber(value: ChatViewController.messageBadge)
+            notification.sound = UNNotificationSound.default()
+            let request = UNNotificationRequest(identifier: "user notify", content: notification, trigger: nil)
+            center.add(request)
+        }
     }
     
     /*

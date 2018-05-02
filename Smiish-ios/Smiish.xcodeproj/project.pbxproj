@@ -19,6 +19,7 @@
 		D12BDA6E20696C6D00CBA2F6 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA6D20696C6D00CBA2F6 /* ChatViewController.swift */; };
 		D12BDA7020699EAD00CBA2F6 /* ChatField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA6F20699EAD00CBA2F6 /* ChatField.swift */; };
 		D12BDA72206AF74200CBA2F6 /* MessageCellWithName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12BDA71206AF74200CBA2F6 /* MessageCellWithName.swift */; };
+		D12D859320996C0200A35194 /* Messages .swift in Sources */ = {isa = PBXBuildFile; fileRef = D12D859220996C0200A35194 /* Messages .swift */; };
 		D16EE5DD208FB26900685527 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D16EE5DC208FB26900685527 /* Pacifico-Regular.ttf */; };
 		D1739926206C454C00319F26 /* MessageCellNoName.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1739925206C454C00319F26 /* MessageCellNoName.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +40,7 @@
 		D12BDA6D20696C6D00CBA2F6 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		D12BDA6F20699EAD00CBA2F6 /* ChatField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatField.swift; sourceTree = "<group>"; };
 		D12BDA71206AF74200CBA2F6 /* MessageCellWithName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellWithName.swift; sourceTree = "<group>"; };
+		D12D859220996C0200A35194 /* Messages .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Messages .swift"; sourceTree = "<group>"; };
 		D16EE5DC208FB26900685527 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pacifico-Regular.ttf"; sourceTree = "<group>"; };
 		D1739925206C454C00319F26 /* MessageCellNoName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCellNoName.swift; sourceTree = "<group>"; };
 		D6A4AD3B8E3F04AD4D5AB4FE /* Pods-Smiish.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Smiish.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Smiish/Pods-Smiish.debug.xcconfig"; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				D12BDA6520672E1900CBA2F6 /* Socket.swift */,
+				D12D859220996C0200A35194 /* Messages .swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -188,6 +191,11 @@
 					D12BDA4F20672CC000CBA2F6 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -293,6 +301,7 @@
 			files = (
 				D12BDA7020699EAD00CBA2F6 /* ChatField.swift in Sources */,
 				D1739926206C454C00319F26 /* MessageCellNoName.swift in Sources */,
+				D12D859320996C0200A35194 /* Messages .swift in Sources */,
 				D12BDA5620672CC000CBA2F6 /* LoginViewController.swift in Sources */,
 				D12BDA5420672CC000CBA2F6 /* AppDelegate.swift in Sources */,
 				D12BDA6C206772D800CBA2F6 /* JoinField.swift in Sources */,
@@ -442,10 +451,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KCSX6N6HYG;
+				DEVELOPMENT_TEAM = BTMH9CA9RK;
 				INFOPLIST_FILE = Smiish/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.smiish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelhandria.Smiish;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -460,10 +469,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = KCSX6N6HYG;
+				DEVELOPMENT_TEAM = BTMH9CA9RK;
 				INFOPLIST_FILE = Smiish/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.smiish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelhandria.Smiish;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

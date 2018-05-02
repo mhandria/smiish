@@ -77,6 +77,7 @@ class LoginViewController: UIViewController{
         //Create Tap Gesture to dismiss Keyboard when tapped.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
+        
 
     }
 

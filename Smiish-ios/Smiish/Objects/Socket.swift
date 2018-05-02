@@ -20,7 +20,7 @@ open class Socket{
     
     //intialize socket.
     private init(){
-        manager = SocketManager(socketURL: URL(string: "https://smiish.com")!, config: [.log(true), .compress])
+        manager = SocketManager(socketURL: URL(string: "https://smiish.com")!, config: [.log(false), .compress])
         socket = manager.defaultSocket
     }
     
