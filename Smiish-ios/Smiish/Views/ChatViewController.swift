@@ -141,14 +141,16 @@ class ChatViewController: UIViewController{
     */
     func insertMsgArray(name: String, msg: String){
         
-        //function to notify users
-        notifyUsers(name: name, msg: msg)
+        
         
         //append on the message array when the user sends a message
         messages.append(Messages(name: name, message: msg))
         
         //table must be reloaded in order to show the incomming data.
         tableView.reloadData()
+        
+        //function to notify users
+        notifyUsers(name: name, msg: msg)
         
         //perform this ASYNCRONOUSLY to scroll to the last cell that has just been added in.
         DispatchQueue.main.async {
