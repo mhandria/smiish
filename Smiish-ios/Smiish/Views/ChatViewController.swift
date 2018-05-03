@@ -76,8 +76,11 @@ class ChatViewController: UIViewController{
         tableView.addGestureRecognizer(rightSwipeBack)
         
         
-        sendButton.layer.cornerRadius = 12
-        sendButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 12)
+        //Call StyleView Func
+        styleViews()
+        
+        //Call standardLayout Func
+        standardLayout()
         
         
         //give table delegate.
@@ -153,7 +156,6 @@ class ChatViewController: UIViewController{
             let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
-        
     }
     
     /*
@@ -194,8 +196,59 @@ class ChatViewController: UIViewController{
     @IBAction func sendMsg(_ sender: UIButton) {
         Socket.default.socket.emit("Chat Message", self.roomName, self.userName, msgContent.text)
         msgContent.text = ""
-        view.endEditing(true)
+        //view.endEditing(true)
     }
+    
+    /* StyleViews
+     
+        Add Style to VC
+     
+    */
+    private func styleViews(){
+        
+        //tableView.backgroundColor = .yellow
+        
+        sendButton.layer.cornerRadius = 12
+        sendButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 15)
+        
+        
+    }
+    
+    /* standardLayout func
+     
+        Func called to add constraints within the VC
+     
+    */
+    private func standardLayout(){
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: msgContent.topAnchor, constant: -10).isActive = true
+        
+        //Msg Content Constraints
+        msgContent.translatesAutoresizingMaskIntoConstraints = false
+        msgContent.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        msgContent.leftAnchor.constraint(equalTo: view.leftAnchor , constant: 10).isActive = true
+        msgContent.rightAnchor.constraint(equalTo: sendButton.leftAnchor, constant: -10).isActive = true
+        msgContent.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+        msgContent.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        
+        
+        sendButton.translatesAutoresizingMaskIntoConstraints = false
+        sendButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        sendButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        sendButton.leftAnchor.constraint(equalTo: msgContent.rightAnchor).isActive = true
+        sendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
+        sendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 5).isActive = true
+        sendButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        
+        
+        
+    }
+    
+    
+    
     
 }
 
