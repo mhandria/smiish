@@ -58,7 +58,11 @@ class ChatViewController: UIViewController{
 
     override func viewDidAppear(_ animated: Bool) {
         Socket.default.socket.emit("Join Room", roomName)
+        //Show Navigation Controller in Chat VC
+        self.navigationController?.isNavigationBarHidden = false
         ChatViewController.messageBadge = 0
+        
+
     }
     
     override func viewDidLoad() {
@@ -67,8 +71,7 @@ class ChatViewController: UIViewController{
         ChatViewController.messageBadge = 0
         
         
-        //Show Navigation Controller in Chat VC
-        self.navigationController?.isNavigationBarHidden = false
+
         let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(ChatViewController.goBack))
         rightSwipeBack.direction = .right
         
@@ -222,20 +225,21 @@ class ChatViewController: UIViewController{
      
     */
     private func standardLayout(){
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: msgContent.topAnchor, constant: -10).isActive = true
+        //tableView.contentMode = .scaleAspectFit
         
         //Msg Content Constraints
         msgContent.translatesAutoresizingMaskIntoConstraints = false
         msgContent.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        msgContent.leftAnchor.constraint(equalTo: view.leftAnchor , constant: 10).isActive = true
-        msgContent.rightAnchor.constraint(equalTo: sendButton.leftAnchor, constant: -10).isActive = true
+        msgContent.leadingAnchor.constraint(equalTo: view.leadingAnchor , constant: 10).isActive = true
+        msgContent.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -10).isActive = true
         msgContent.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
-        msgContent.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
-        
+        msgContent.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
         
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -243,15 +247,9 @@ class ChatViewController: UIViewController{
         sendButton.leftAnchor.constraint(equalTo: msgContent.rightAnchor).isActive = true
         sendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         sendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 5).isActive = true
-        sendButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
-        
-        
+        sendButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
         
     }
-    
-    
-    
-    
 }
 
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
