@@ -15,7 +15,7 @@ struct Messages{
     var name: String
     var message: String
     var systemTime: String
-    
+
     init(name: String, message: String, systemTime: String){
         self.name = name
         self.message = message
@@ -24,26 +24,26 @@ struct Messages{
 }
 
 class ChatViewController: UIViewController{
-    
+
     //holds the app user's data of roomname that
     //he/she is in and the username he/she selected
     var userName: String = ""
     var roomName: String = ""
     open static var messageBadge: Int = 0
-    
+
     let center = UNUserNotificationCenter.current()
     let notification = UNMutableNotificationContent()
-    
+
     var messages = [Messages]()
-    
+
     @IBOutlet weak var sendButton: UIButton!
     //@IBOutlet weak var msgContent: ChatField!
     @IBOutlet weak var tableView: UITableView!
-    
+
     @IBOutlet weak var msgContent: ChatField!
-    
-    
-    
+
+
+
     /* CONSTRUCTOR
      summary:
         custom custroctor for this specific controller
@@ -52,52 +52,53 @@ class ChatViewController: UIViewController{
     init(){
         super.init(nibName: nil, bundle: nil)
     }
-    
-    
+
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
 
     override func viewDidAppear(_ animated: Bool) {
         //Socket.default.socket.emit("Join Room", roomName)
         ChatViewController.messageBadge = 0
+
+
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         //reset badge for notifications
         ChatViewController.messageBadge = 0
-        
-        
-        //Show Navigation Controller in Chat VC
-        self.navigationController?.isNavigationBarHidden = false
+
+
+
         let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(ChatViewController.goBack))
         rightSwipeBack.direction = .right
-        
-        
+
+
         tableView.addGestureRecognizer(rightSwipeBack)
-        
-        
+
+
         //Call StyleView Func
         styleViews()
-        
+
         //Call standardLayout Func
         standardLayout()
-        
-        
+
+
         //give table delegate.
         //basically allows the tableView utilize the
         //extension code written below
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        
-        
+
+
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatViewController.dismissKeyboard))
         tableView.addGestureRecognizer(tap)
 
-        
+
         //socket event
         Socket.default.socket.on("chat message") { (data, ack) in
             let dict = data[0] as? Dictionary<String, String>
@@ -106,12 +107,12 @@ class ChatViewController: UIViewController{
             let name = dict!["username"]
             let time = dict!["systemTime"]
             let msg = dict!["message"]
-            
+
             //if the name is self then don't append it to view.
             self.insertMsgArray(name: name!, time: time!, msg: msg!)
-            
+
         }
-        
+
         Socket.default.socket.on("user join") { (data, ack) in
             var userName = "you"
             do{
@@ -126,7 +127,7 @@ class ChatViewController: UIViewController{
         }
         // Do any additional setup after loading the view.
     }
-    
+
     /*
      summary:
         this function will be used to dismiss the keyboard from the view
@@ -148,7 +149,7 @@ class ChatViewController: UIViewController{
     @objc func goBack(sender: UISwipeGestureRecognizer){
         self.navigationController?.popViewController(animated: true)
     }
-    
+
     /*
      summary:
         function will insert new message to the array and
@@ -159,18 +160,18 @@ class ChatViewController: UIViewController{
         msg - content to be displayed "user message"
     */
     func insertMsgArray(name: String, time: String, msg: String){
-        
-        
-        
+
+
+
         //append on the message array when the user sends a message
         messages.append(Messages(name: name, message: msg, systemTime: time))
-        
+
         //table must be reloaded in order to show the incomming data.
         tableView.reloadData()
-        
+
         //function to notify users
         notifyUsers(name: (name+" "+time), msg: msg)
-        
+
         //perform this ASYNCRONOUSLY to scroll to the last cell that has just been added in.
         DispatchQueue.main.async {
             //get an index path (last row) then scroll to bottom of added msg.
@@ -178,7 +179,7 @@ class ChatViewController: UIViewController{
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
-    
+
     /*
      summary:
         function will notify users, if users enters app in background mode, that a notification
@@ -199,7 +200,7 @@ class ChatViewController: UIViewController{
             center.add(request)
         }
     }
-    
+
     /*
      Generated by Xcode
     */
@@ -207,7 +208,7 @@ class ChatViewController: UIViewController{
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     /*
      summary:
         function called when app user press the send button to "emit" the message.
@@ -219,77 +220,72 @@ class ChatViewController: UIViewController{
         msgContent.text = ""
         //view.endEditing(true)
     }
-    
+
     /* StyleViews
-     
+
         Add Style to VC
-     
+
     */
     private func styleViews(){
-        
+
         //tableView.backgroundColor = .yellow
-        
+
         sendButton.layer.cornerRadius = 12
         sendButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 15)
-        
-        
+
+
     }
-    
+
     /* standardLayout func
-     
+
         Func called to add constraints within the VC
-     
+
     */
     private func standardLayout(){
+
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: msgContent.topAnchor, constant: -10).isActive = true
-        
+        //tableView.contentMode = .scaleAspectFit
+
         //Msg Content Constraints
         msgContent.translatesAutoresizingMaskIntoConstraints = false
         msgContent.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        msgContent.leftAnchor.constraint(equalTo: view.leftAnchor , constant: 10).isActive = true
-        msgContent.rightAnchor.constraint(equalTo: sendButton.leftAnchor, constant: -10).isActive = true
+        msgContent.leadingAnchor.constraint(equalTo: view.leadingAnchor , constant: 10).isActive = true
+        msgContent.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -10).isActive = true
         msgContent.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
-        msgContent.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
-        
-        
+        msgContent.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         sendButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
         sendButton.leftAnchor.constraint(equalTo: msgContent.rightAnchor).isActive = true
         sendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
         sendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 5).isActive = true
-        sendButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
-        
-        
-        
+        sendButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+
     }
-    
-    
-    
-    
 }
 
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
-    
+
     //number of sections that the table will have.
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     //get the count of the cells into the table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.messages.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         //get current message data to be displayed on the table
         let messageNew = self.messages[indexPath.row]
-        
+
         //a boolean that can determine whether or not the
         //last message added to the table is sent by the current message
         //to be displayed
