@@ -8,15 +8,18 @@
 
 import UIKit
 import UserNotifications
+import Toaster
 
 //struct to hold the message data coming in
 struct Messages{
     var name: String
     var message: String
+    var systemTime: String
     
-    init(name: String, message: String){
+    init(name: String, message: String, systemTime: String){
         self.name = name
         self.message = message
+        self.systemTime = systemTime
     }
 }
 
@@ -57,7 +60,7 @@ class ChatViewController: UIViewController{
     
 
     override func viewDidAppear(_ animated: Bool) {
-        Socket.default.socket.emit("Join Room", roomName)
+        //Socket.default.socket.emit("Join Room", roomName)
         ChatViewController.messageBadge = 0
     }
     
@@ -96,14 +99,30 @@ class ChatViewController: UIViewController{
 
         
         //socket event
-        Socket.default.socket.on("Chat Message") { (data, ack) in
+        Socket.default.socket.on("chat message") { (data, ack) in
+            let dict = data[0] as? Dictionary<String, String>
+            print("\(dict!["message"])")
             //make sure that you get a name and msg from the Chat Message event.
-            guard let name = data[0] as? String else {return}
-            guard let msg = data[1] as? String else {return}
+            let name = dict!["username"]
+            let time = dict!["systemTime"]
+            let msg = dict!["message"]
             
             //if the name is self then don't append it to view.
-            self.insertMsgArray(name: name, msg: msg)
+            self.insertMsgArray(name: name!, time: time!, msg: msg!)
             
+        }
+        
+        Socket.default.socket.on("user join") { (data, ack) in
+            var userName = "you"
+            do{
+                if data.count > 2 {
+                    userName = data[1] as! String
+                }
+            }catch {
+                return
+            }
+            let broadcast = userName+" has joined the room"
+            Toast(text: broadcast).show()
         }
         // Do any additional setup after loading the view.
     }
@@ -139,18 +158,18 @@ class ChatViewController: UIViewController{
         name - username that sent the msg
         msg - content to be displayed "user message"
     */
-    func insertMsgArray(name: String, msg: String){
+    func insertMsgArray(name: String, time: String, msg: String){
         
         
         
         //append on the message array when the user sends a message
-        messages.append(Messages(name: name, message: msg))
+        messages.append(Messages(name: name, message: msg, systemTime: time))
         
         //table must be reloaded in order to show the incomming data.
         tableView.reloadData()
         
         //function to notify users
-        notifyUsers(name: name, msg: msg)
+        notifyUsers(name: (name+" "+time), msg: msg)
         
         //perform this ASYNCRONOUSLY to scroll to the last cell that has just been added in.
         DispatchQueue.main.async {
@@ -196,7 +215,7 @@ class ChatViewController: UIViewController{
         sender - UIButtonView that calls this function
     */
     @IBAction func sendMsg(_ sender: UIButton) {
-        Socket.default.socket.emit("Chat Message", self.roomName, self.userName, msgContent.text)
+        Socket.default.socket.emit("chat message", msgContent.text)
         msgContent.text = ""
         //view.endEditing(true)
     }
@@ -278,15 +297,15 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
         if(indexPath.row > 0){
             displayName = (self.messages[indexPath.row-1].name != messageNew.name)
         }
-        
+        let content = messageNew.systemTime + "\n" + messageNew.message
         //determine what type of cell will go into the table view
         if(displayName){
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellView", for: indexPath) as! MessageCellWithName
-            cell.setCell(name: messageNew.name, msg: messageNew.message, senderName: self.userName)
+            cell.setCell(name: messageNew.name, msg: content, senderName: self.userName)
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellViewNoName", for: indexPath) as! MessageCellNoName
-            cell.setCell(name: messageNew.name, msg: messageNew.message, senderName: self.userName)
+            cell.setCell(name: messageNew.name, msg: content, senderName: self.userName)
             return cell
         }
     }

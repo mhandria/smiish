@@ -91,7 +91,8 @@ class LoginViewController: UIViewController{
         nameField.hasTouch = true
         roomField.hasTouch = true
         if(roomField.text != "" && nameField.text != ""){
-            Socket.default.socket.emit("Join Room", roomField.text!)
+            let args = ["roomName": roomField.text!, "username":nameField.text!]
+            Socket.default.socket.emit("login", args)
         }else{
             if((nameField.text?.isEmpty)! && (roomField.text?.isEmpty)!){
                 Toast(text: "Please Enter User and Room Name").show()
