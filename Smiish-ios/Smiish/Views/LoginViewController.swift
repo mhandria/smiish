@@ -42,11 +42,11 @@ class LoginViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
 
         super.viewWillAppear(animated)
-
+        
         //What the viewcontroller should when entering into Login View Controller
         // Remove Navi Bar on Login View
         navigationController?.setNavigationBarHidden(true, animated: false)
-
+        Socket.default.closeConnection()
         //Lock Orientation to Portait Mode
         AppDelegate.AppUtility.lockOrientation(.portrait)
         //This will initialize ViewController in portrait regardless of the device orientation - Change

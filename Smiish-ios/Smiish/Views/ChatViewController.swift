@@ -25,6 +25,7 @@ struct Messages{
 
 class ChatViewController: UIViewController{
 
+
     //holds the app user's data of roomname that
     //he/she is in and the username he/she selected
     var userName: String = ""
@@ -37,11 +38,16 @@ class ChatViewController: UIViewController{
     var messages = [Messages]()
 
     @IBOutlet weak var sendButton: UIButton!
-    //@IBOutlet weak var msgContent: ChatField!
+
     @IBOutlet weak var tableView: UITableView!
 
     @IBOutlet weak var msgContent: ChatField!
 
+    //Bottom portion of View that includes MsgContent and SendButton
+    let messageInputView: UIView = {
+        let view = UIView()
+        return view
+    }()
 
 
     /* CONSTRUCTOR
@@ -58,24 +64,41 @@ class ChatViewController: UIViewController{
         super.init(coder: aDecoder)
     }
 
+    /*  ViewDidAppear
 
+     Notifies the view controller that its view was added to a view hierarchy.
+
+    */
     override func viewDidAppear(_ animated: Bool) {
+        //Socket.default.socket.emit("Join Room", roomName)
+
+
+        //Show Navigation Controller in Chat VC
+        self.navigationController?.isNavigationBarHidden = false
+
         ChatViewController.messageBadge = 0
     }
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         //reset badge for notifications
         ChatViewController.messageBadge = 0
 
 
-
-        let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(ChatViewController.goBack))
+        //Gesture for swiping back
+        let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(self.goBack))
         rightSwipeBack.direction = .right
-
 
         tableView.addGestureRecognizer(rightSwipeBack)
 
+        //Notify when keyboard appears
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+
+        //Add Subviews within chatVC
+        addView()
 
         //Call StyleView Func
         styleViews()
@@ -93,28 +116,45 @@ class ChatViewController: UIViewController{
 
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatViewController.dismissKeyboard))
+
         tableView.addGestureRecognizer(tap)
 
 
         //socket event
         Socket.default.socket.on("chat message") { (data, ack) in
-            if let dict = data[0] as? Dictionary<String, String>{
-                if let name = dict["username"], let time = dict["systemTime"], let msg = dict["message"]{
-                     self.insertMsgArray(name: name, time: time, msg: msg)
+          if let dict = data[0] as? Dictionary<String, String>{
+              if let name = dict["username"], let time = dict["systemTime"], let msg = dict["message"]{
+                   self.insertMsgArray(name: name, time: time, msg: msg)
+              }
+          }
+        }
+
+        Socket.default.socket.on("new user"){ (data, ack) in
+            print("\(data)")
+            if let dict = data[0] as? NSMutableDictionary{
+                let _name = dict["username"] as? String
+                let _numUser = dict["numUsers"] as? Int
+                if let name = _name, let numUser = _numUser{
+                    let alert = name+" has joined the room with: \(numUser) users"
+                    Toast(text: alert).show()
                 }
             }
         }
-
-        Socket.default.socket.on("user join") { (data, ack) in
-            var userName = "you"
-            if data.count > 2 {
-                userName = data[1] as! String
-            }
-            let broadcast = userName+" has joined the room"
-            Toast(text: broadcast).show()
-        }
         // Do any additional setup after loading the view.
     }
+
+    @objc func keyboardWillShow(notification: NSNotification){
+        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+
+        if bottomConstraint?.constant == 0{
+            bottomConstraint?.constant = -keyboardSize!.height
+        }else{
+            bottomConstraint?.constant = 0
+        }
+
+
+    }
+
 
     /*
      summary:
@@ -135,7 +175,9 @@ class ChatViewController: UIViewController{
         sender - swipe left gesture.
     */
     @objc func goBack(sender: UISwipeGestureRecognizer){
+        Socket.default.closeConnection()
         self.navigationController?.popViewController(animated: true)
+
     }
 
     /*
@@ -148,8 +190,6 @@ class ChatViewController: UIViewController{
         msg - content to be displayed "user message"
     */
     func insertMsgArray(name: String, time: String, msg: String){
-
-
 
         //append on the message array when the user sends a message
         messages.append(Messages(name: name, message: msg, systemTime: time))
@@ -209,6 +249,25 @@ class ChatViewController: UIViewController{
         //view.endEditing(true)
     }
 
+    /* addView()
+
+        This func will add all the subviews used in chatVC
+
+    */
+    func addView(){
+        //Portion of view in the bottom of the screen
+        view.addSubview(messageInputView)
+        //messageInputView.backgroundColor = .gray
+        //add msgContent
+        messageInputView.addSubview(msgContent)
+        //Add Send Button
+        messageInputView.addSubview(sendButton)
+
+        //view.addConstraintsWithFormat("H:|[v0]|", views: messageInputView)
+        //view.addConstraintsWithFormat("V:[v0(30)]|",views: messageInputView)
+
+    }
+
     /* StyleViews
 
         Add Style to VC
@@ -229,30 +288,44 @@ class ChatViewController: UIViewController{
         Func called to add constraints within the VC
 
     */
+
+    //Bottom Constraint used for Keyboard will show
+    var bottomConstraint: NSLayoutConstraint?
+
     private func standardLayout(){
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: msgContent.topAnchor, constant: -10).isActive = true
-        //tableView.contentMode = .scaleAspectFit
+        tableView.bottomAnchor.constraint(equalTo: messageInputView.topAnchor).isActive = true
+
+        messageInputView.translatesAutoresizingMaskIntoConstraints = false
+        messageInputView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        messageInputView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        messageInputView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        messageInputView.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+        bottomConstraint = NSLayoutConstraint(item: messageInputView, attribute: .bottom, relatedBy: .equal , toItem: view.safeAreaLayoutGuide, attribute: .bottom, multiplier: 1, constant: 0)
+        view.addConstraint(bottomConstraint!)
+
+        //messageInputView.backgroundColor = .blue
+
 
         //Msg Content Constraints
         msgContent.translatesAutoresizingMaskIntoConstraints = false
         msgContent.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        msgContent.leadingAnchor.constraint(equalTo: view.leadingAnchor , constant: 10).isActive = true
+        msgContent.leadingAnchor.constraint(equalTo: messageInputView.leadingAnchor, constant: 10).isActive = true
         msgContent.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -10).isActive = true
-        msgContent.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
-        msgContent.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+        msgContent.topAnchor.constraint(equalTo: messageInputView.topAnchor, constant: 10).isActive = true
+        msgContent.bottomAnchor.constraint(equalTo: messageInputView.bottomAnchor, constant: -10).isActive = true
 
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         sendButton.widthAnchor.constraint(equalToConstant: 75).isActive = true
-        sendButton.leftAnchor.constraint(equalTo: msgContent.rightAnchor).isActive = true
-        sendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive = true
-        sendButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 5).isActive = true
-        sendButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+        sendButton.leadingAnchor.constraint(equalTo: msgContent.trailingAnchor).isActive = true
+        sendButton.trailingAnchor.constraint(equalTo: messageInputView.trailingAnchor, constant: -10).isActive = true
+        sendButton.topAnchor.constraint(equalTo: messageInputView.topAnchor, constant: 10).isActive = true
+        sendButton.bottomAnchor.constraint(equalTo: messageInputView.bottomAnchor, constant: -10).isActive = true
 
     }
 }
@@ -293,4 +366,19 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         }
     }
+}
+extension UIView{
+    func addConstraintsWithFormat(format: String, views: UIView...) {
+
+        var viewsDict = [String: UIView]()
+
+        for (index, view) in views.enumerated() {
+
+            view.translatesAutoresizingMaskIntoConstraints = false
+            viewsDict["v\(index)"] = view
+        }
+
+        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDict))
+    }
+
 }
