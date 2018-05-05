@@ -77,8 +77,7 @@ class ChatViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-    
+
         //reset badge for notifications
         ChatViewController.messageBadge = 0
         //Gesture for swiping back
@@ -169,7 +168,7 @@ class ChatViewController: UIViewController{
         self.navigationController?.popViewController(animated: true)
 
     }
-    
+
     override func viewDidDisappear(_ animated: Bool) {
         Socket.default.socket.emit("disconnect")
         Socket.default.socket.off("chat message")
@@ -329,19 +328,23 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
 
         //get current message data to be displayed on the table
         let messageNew = self.messages[indexPath.row]
-
         //a boolean that can determine whether or not the
         //last message added to the table is sent by the current message
         //to be displayed
         var displayName = (indexPath.row == 0)
         if(indexPath.row > 0){
             displayName = (self.messages[indexPath.row-1].name != messageNew.name)
+            //displayName = displayName; +" @ " + messageNew.systemTime
         }
-        let content = messageNew.systemTime + "\n" + messageNew.message
+
+        //messageNew.systemTime + "\n" +  this is for adding systemtime
+        let content =  messageNew.message
+
+
         //determine what type of cell will go into the table view
         if(displayName){
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellView", for: indexPath) as! MessageCellWithName
-            cell.setCell(name: messageNew.name, msg: content, senderName: self.userName)
+            cell.setCell(name: messageNew.name+" @ " + messageNew.systemTime, msg: content, senderName: self.userName + " @ " + messageNew.systemTime)
             return cell
         }else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "CellViewNoName", for: indexPath) as! MessageCellNoName
@@ -349,19 +352,4 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         }
     }
-}
-extension UIView{
-    func addConstraintsWithFormat(format: String, views: UIView...) {
-
-        var viewsDict = [String: UIView]()
-
-        for (index, view) in views.enumerated() {
-
-            view.translatesAutoresizingMaskIntoConstraints = false
-            viewsDict["v\(index)"] = view
-        }
-
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: format, options: NSLayoutFormatOptions(), metrics: nil, views: viewsDict))
-    }
-
 }

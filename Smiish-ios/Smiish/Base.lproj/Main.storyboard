@@ -76,7 +76,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7m-o7-Q3a">
                                 <rect key="frame" x="16" y="521" width="382" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.70196078431372544" green="0.0078431372549019607" blue="0.015686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.70075696239999996" green="0.0084930666710000009" blue="0.016653927700000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -115,7 +115,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellView" rowHeight="250" id="RXi-LI-09g" customClass="MessageCellWithName" customModule="Smiish" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="0.0" height="250"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RXi-LI-09g" id="4e8-aw-NeM">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="249.66666666666666"/>
@@ -175,7 +175,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CellViewNoName" rowHeight="189" id="QsQ-0W-Fnh" customClass="MessageCellNoName" customModule="Smiish" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="278" width="0.0" height="189"/>
+                                        <rect key="frame" x="0.0" y="278" width="414" height="189"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QsQ-0W-Fnh" id="Y0X-Lf-Xhz">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="188.66666666666666"/>

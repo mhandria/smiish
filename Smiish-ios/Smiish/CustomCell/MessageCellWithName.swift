@@ -29,11 +29,12 @@ class MessageCellWithName: UITableViewCell {
             self.senderName = nil
         }else{
             self.senderName.text = name
+            self.senderName.font = UIFont(name: "Pacifico-Regular", size: 15)
         }
         self.message.text = msg
         
         if(name == senderName){
-            message.backgroundColor = UIColor.blue
+            message.backgroundColor = #colorLiteral(red: 0, green: 0.5604334677, blue: 1, alpha: 1)
             message.textColor = UIColor.white
         }else{
             message.backgroundColor = UIColor.lightGray

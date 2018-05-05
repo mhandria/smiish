@@ -9,7 +9,7 @@
 import UIKit
 
 @IBDesignable
-class ChatField: UITextView {
+class ChatField: UITextView{
     
     @IBInspectable var borderColor: UIColor = UIColor.init(red: 0, green: 0, blue: 0, alpha: 1){
         didSet{

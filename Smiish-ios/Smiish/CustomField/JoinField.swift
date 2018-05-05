@@ -12,7 +12,6 @@ import UIKit
 @IBDesignable
 class JoinField: UITextField, UITextFieldDelegate {
     
-    
     var hasTouch: Bool = false{
         didSet{
             updateRightView()
