@@ -7,16 +7,22 @@ var path = require('path');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
+var cors = require('cors');
+
+const allowed = ['http://localhost:3000', 'https://smiish.com'];
+
+const corsOptions = {
+  origin: allowed,
+  preflightContinue: true,
+  allowedHeaders: 'Content-Type,Authorization',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+};
 
 
-
-// app.get('/', function(req, res){
-//   res.send("{msg: this is the api endpoint for Smiish}")
-// });
-
-// Routing
-//for front end app when testing
-app.use(express.static(path.join(__dirname)));
+// Enable the cors options on all routes
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+app.use(express.static(__dirname));
 
 
 http.listen(port, function(){
@@ -31,12 +37,14 @@ io.on('connection', function(socket){
   //TODO: DEPRECATE
   //When the client emits 'login', this listens and executes
   socket.on('login', function(data){
-    if (addedUser) return;
-    addedUser = true;
 
-    //Store username and roomName in socket session
-    socket.username = data.username;
-    socket.roomName = data.roomName;
+
+    if(!addedUser){
+      //Store username and roomName in socket session
+      socket.username = data.username;
+      socket.roomName = data.roomName;
+      addedUser = true;
+    }
 
     //User joins roomName
     socket.join(socket.roomName);
