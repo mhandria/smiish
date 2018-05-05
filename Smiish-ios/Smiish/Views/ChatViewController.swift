@@ -60,10 +60,7 @@ class ChatViewController: UIViewController{
 
 
     override func viewDidAppear(_ animated: Bool) {
-        //Socket.default.socket.emit("Join Room", roomName)
         ChatViewController.messageBadge = 0
-
-
     }
 
     override func viewDidLoad() {
@@ -101,26 +98,17 @@ class ChatViewController: UIViewController{
 
         //socket event
         Socket.default.socket.on("chat message") { (data, ack) in
-            let dict = data[0] as? Dictionary<String, String>
-            print("\(dict!["message"])")
-            //make sure that you get a name and msg from the Chat Message event.
-            let name = dict!["username"]
-            let time = dict!["systemTime"]
-            let msg = dict!["message"]
-
-            //if the name is self then don't append it to view.
-            self.insertMsgArray(name: name!, time: time!, msg: msg!)
-
+            if let dict = data[0] as? Dictionary<String, String>{
+                if let name = dict["username"], let time = dict["systemTime"], let msg = dict["message"]{
+                     self.insertMsgArray(name: name, time: time, msg: msg)
+                }
+            }
         }
 
         Socket.default.socket.on("user join") { (data, ack) in
             var userName = "you"
-            do{
-                if data.count > 2 {
-                    userName = data[1] as! String
-                }
-            }catch {
-                return
+            if data.count > 2 {
+                userName = data[1] as! String
             }
             let broadcast = userName+" has joined the room"
             Toast(text: broadcast).show()
