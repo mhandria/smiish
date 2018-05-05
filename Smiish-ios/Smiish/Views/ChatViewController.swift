@@ -67,26 +67,20 @@ class ChatViewController: UIViewController{
     /*  ViewDidAppear
 
      Notifies the view controller that its view was added to a view hierarchy.
-
     */
     override func viewDidAppear(_ animated: Bool) {
-        //Socket.default.socket.emit("Join Room", roomName)
-
-
         //Show Navigation Controller in Chat VC
         self.navigationController?.isNavigationBarHidden = false
-
         ChatViewController.messageBadge = 0
     }
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+    
         //reset badge for notifications
         ChatViewController.messageBadge = 0
-
-
         //Gesture for swiping back
         let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(self.goBack))
         rightSwipeBack.direction = .right
@@ -95,7 +89,7 @@ class ChatViewController: UIViewController{
 
         //Notify when keyboard appears
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
 
         //Add Subviews within chatVC
         addView()
@@ -132,11 +126,8 @@ class ChatViewController: UIViewController{
         Socket.default.socket.on("new user"){ (data, ack) in
             print("\(data)")
             if let dict = data[0] as? NSMutableDictionary{
-                let _name = dict["username"] as? String
-                let _numUser = dict["numUsers"] as? Int
-                if let name = _name, let numUser = _numUser{
-                    let alert = name+" has joined the room with: \(numUser) users"
-                    Toast(text: alert).show()
+                if let name = dict["username"], let numUser = dict["numUsers"]{
+                    Toast(text: "\(name)has joined the room with: \(numUser) users").show()
                 }
             }
         }
@@ -145,7 +136,6 @@ class ChatViewController: UIViewController{
 
     @objc func keyboardWillShow(notification: NSNotification){
         let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
-
         if bottomConstraint?.constant == 0{
             bottomConstraint?.constant = -keyboardSize!.height
         }else{
@@ -157,7 +147,7 @@ class ChatViewController: UIViewController{
 
 
     /*
-     summary:
+     @summary:
         this function will be used to dismiss the keyboard from the view
     */
     @objc override func dismissKeyboard() {
@@ -166,7 +156,7 @@ class ChatViewController: UIViewController{
     }
 
     /*
-     summary:
+     @summary:
         function is called as a swipe left gesture
         this will pop the current view and bring user to
         the last view before going to this view
@@ -179,9 +169,15 @@ class ChatViewController: UIViewController{
         self.navigationController?.popViewController(animated: true)
 
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        Socket.default.socket.emit("disconnect")
+        Socket.default.socket.off("chat message")
+        Socket.default.socket.off("new user")
+    }
 
     /*
-     summary:
+     @summary:
         function will insert new message to the array and
         send reload table view as well as scroll to the last, newly added, cell
         of the table view
@@ -209,7 +205,7 @@ class ChatViewController: UIViewController{
     }
 
     /*
-     summary:
+     @summary:
         function will notify users, if users enters app in background mode, that a notification
         is comming in
      params:
@@ -238,7 +234,7 @@ class ChatViewController: UIViewController{
     }
 
     /*
-     summary:
+     @summary:
         function called when app user press the send button to "emit" the message.
      params:
         sender - UIButtonView that calls this function
@@ -249,23 +245,15 @@ class ChatViewController: UIViewController{
         //view.endEditing(true)
     }
 
-    /* addView()
-
+    /*
+     @summary:
         This func will add all the subviews used in chatVC
-
     */
     func addView(){
         //Portion of view in the bottom of the screen
         view.addSubview(messageInputView)
-        //messageInputView.backgroundColor = .gray
-        //add msgContent
         messageInputView.addSubview(msgContent)
-        //Add Send Button
         messageInputView.addSubview(sendButton)
-
-        //view.addConstraintsWithFormat("H:|[v0]|", views: messageInputView)
-        //view.addConstraintsWithFormat("V:[v0(30)]|",views: messageInputView)
-
     }
 
     /* StyleViews
@@ -274,13 +262,8 @@ class ChatViewController: UIViewController{
 
     */
     private func styleViews(){
-
-        //tableView.backgroundColor = .yellow
-
         sendButton.layer.cornerRadius = 12
         sendButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 15)
-
-
     }
 
     /* standardLayout func

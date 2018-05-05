@@ -20,12 +20,8 @@ class LoginViewController: UIViewController{
 
     //Create UILabel Login Logo
     let loginLogo = UIImageView(image: #imageLiteral(resourceName: "smiish_Logo"))
-
-    //Add Login Logo Image
-    //let loginLogoImg = UIImageView(image: #imageLiteral(resourceName: "smiish_splash_logo"))
-
     override func viewDidAppear(_ animated: Bool) {
-        Socket.default.establishConnection()
+        //Socket.default.establishConnection()
     }
 
     //What it does when login view controller moves to next segue
@@ -40,13 +36,11 @@ class LoginViewController: UIViewController{
     }
 
     override func viewWillAppear(_ animated: Bool) {
-
-        super.viewWillAppear(animated)
         
+        super.viewWillAppear(animated)
         //What the viewcontroller should when entering into Login View Controller
         // Remove Navi Bar on Login View
         navigationController?.setNavigationBarHidden(true, animated: false)
-        Socket.default.closeConnection()
         //Lock Orientation to Portait Mode
         AppDelegate.AppUtility.lockOrientation(.portrait)
         //This will initialize ViewController in portrait regardless of the device orientation - Change
@@ -61,6 +55,7 @@ class LoginViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         /*
         SMIISH LOGO IMAGE
          */
