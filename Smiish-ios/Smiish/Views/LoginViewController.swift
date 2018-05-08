@@ -18,12 +18,11 @@ class LoginViewController: UIViewController{
     @IBOutlet weak var roomField: JoinField!
 
     @IBOutlet weak var joinButton: UIButton!
+    
+    
 
     //Create UILabel Login Logo
     let loginLogo = UIImageView(image: #imageLiteral(resourceName: "smiishLogo"))
-
-    //Add Login Logo Image
-    //let loginLogoImg = UIImageView(image: #imageLiteral(resourceName: "smiish_splash_logo"))
 
     override func viewDidAppear(_ animated: Bool) {
         //Socket.default.establishConnection()
@@ -84,7 +83,10 @@ class LoginViewController: UIViewController{
         //Create Tap Gesture to dismiss Keyboard when tapped.
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
         view.addGestureRecognizer(tap)
-
+        
+        //No auto Suggestions 
+        nameField.autocorrectionType = .no
+        roomField.autocorrectionType = .no
 
     }
 
@@ -95,6 +97,7 @@ class LoginViewController: UIViewController{
 
 
     @IBAction func joinRoom(_ sender: Any) {
+        Socket.default.establishConnection()
         nameField.hasTouch = true
         roomField.hasTouch = true
         if(roomField.text != "" && nameField.text != ""){
@@ -142,11 +145,6 @@ class LoginViewController: UIViewController{
 
     private func styleViews(){
 
-        //Style Navigation Bar
-        //self.navigation
-
-        //Add Font style to Place holder for Name and Room Field
-
 
         //Make button borner Radius 12
         joinButton.layer.cornerRadius = 12
@@ -158,12 +156,9 @@ class LoginViewController: UIViewController{
     private func configureLayout(){
         //Add constraints for SMIISH LOGO
         loginLogo.translatesAutoresizingMaskIntoConstraints = false
-        //loginLogo.backgroundColor = .gray
         loginLogo.centerXAnchor.constraint(equalTo: loginLogo.superview!.centerXAnchor).isActive = true
-        //loginLogo.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        //loginLogo.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        loginLogo.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: 30).isActive = true
-        loginLogo.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -40).isActive = true
+        loginLogo.topAnchor.constraint(greaterThanOrEqualTo: view.topAnchor, constant: -60).isActive = true
+        loginLogo.bottomAnchor.constraint(equalTo: nameField.topAnchor, constant: -30).isActive = true
 
         //Add constraints for User Name
         nameField.translatesAutoresizingMaskIntoConstraints = false
@@ -172,8 +167,7 @@ class LoginViewController: UIViewController{
         nameField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         nameField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         nameField.centerXAnchor.constraint(equalTo: nameField.superview!.centerXAnchor).isActive = true
-        //nameField.topAnchor.constraint(equalTo: loginLogo.bottomAnchor,constant: 20).isActive = true
-        nameField.bottomAnchor.constraint(equalTo: loginLogo.bottomAnchor).isActive = true
+        nameField.bottomAnchor.constraint(equalTo: view.centerYAnchor , constant: -10).isActive = true
 
         //Add Constraints for Room Name
         roomField.translatesAutoresizingMaskIntoConstraints = false
@@ -182,8 +176,8 @@ class LoginViewController: UIViewController{
         roomField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20).isActive = true
         roomField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 20).isActive = true
         roomField.centerXAnchor.constraint(equalTo: roomField.superview!.centerXAnchor).isActive = true
-        roomField.topAnchor.constraint(equalTo: loginLogo.bottomAnchor,constant: 20).isActive = true
-        roomField.bottomAnchor.constraint(equalTo: joinButton.topAnchor, constant: -20).isActive = true
+        roomField.topAnchor.constraint(equalTo: nameField.bottomAnchor,constant: 15).isActive = true
+        roomField.bottomAnchor.constraint(equalTo: joinButton.topAnchor, constant: -15).isActive = true
 
         //Add Constraints for Join Button
         joinButton.translatesAutoresizingMaskIntoConstraints = false

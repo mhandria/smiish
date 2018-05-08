@@ -38,7 +38,7 @@ class ChatViewController: UIViewController{
     var messages = [Messages]()
 
     @IBOutlet weak var sendButton: UIButton!
-
+    
     @IBOutlet weak var tableView: UITableView!
 
     @IBOutlet weak var msgContent: ChatField!
@@ -48,6 +48,23 @@ class ChatViewController: UIViewController{
         let view = UIView()
         return view
     }()
+    
+    //Adding Custom NavigationBar
+    let customNavigationBar: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    let roomNameNaviBar: UILabel = {
+        let label = UILabel()
+        return label
+    }()
+    
+    let leaveRoom: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+    
 
 
     /* CONSTRUCTOR
@@ -70,7 +87,7 @@ class ChatViewController: UIViewController{
     */
     override func viewDidAppear(_ animated: Bool) {
         //Show Navigation Controller in Chat VC
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.isNavigationBarHidden = true
         ChatViewController.messageBadge = 0
     }
 
@@ -80,6 +97,9 @@ class ChatViewController: UIViewController{
 
         //reset badge for notifications
         ChatViewController.messageBadge = 0
+        
+        leaveRoom.addTarget(self, action: #selector(leaveRoomButton), for: .touchUpInside)
+
         //Gesture for swiping back
         let rightSwipeBack = UISwipeGestureRecognizer(target: self, action: #selector(self.goBack))
         rightSwipeBack.direction = .right
@@ -93,11 +113,11 @@ class ChatViewController: UIViewController{
         //Add Subviews within chatVC
         addView()
 
-        //Call StyleView Func
-        styleViews()
-
         //Call standardLayout Func
         standardLayout()
+        
+        //Call StyleView Func
+        styleViews()
 
 
         //give table delegate.
@@ -106,11 +126,14 @@ class ChatViewController: UIViewController{
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-
+        
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ChatViewController.dismissKeyboard))
 
         tableView.addGestureRecognizer(tap)
+        
+        msgContent.autocorrectionType = .no
+        
 
 
         //socket event
@@ -136,12 +159,20 @@ class ChatViewController: UIViewController{
     @objc func keyboardWillShow(notification: NSNotification){
         let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
         if bottomConstraint?.constant == 0{
-            bottomConstraint?.constant = -keyboardSize!.height
+            //Check if Iphone X
+            if #available(iOS 11.0, *) {
+                 bottomConstraint?.constant = -keyboardSize!.height //- 25
+            }else{
+                 bottomConstraint?.constant = -keyboardSize!.height
+            }
         }else{
             bottomConstraint?.constant = 0
         }
-
-
+    }
+    
+    @IBAction func leaveRoom(sender: UIButton ){
+        Socket.default.closeConnection()
+        self.navigationController?.popViewController(animated: true)
     }
 
 
@@ -239,9 +270,19 @@ class ChatViewController: UIViewController{
         sender - UIButtonView that calls this function
     */
     @IBAction func sendMsg(_ sender: UIButton) {
-        Socket.default.socket.emit("chat message", msgContent.text)
-        msgContent.text = ""
+        if(msgContent.text.isEmpty){
+            //Add Here when you want to send SMIISH Image to other people
+            //Socket.default.socket.emit("chat message", "SMIIS" )
+        }else{
+            Socket.default.socket.emit("chat message", msgContent.text)
+            msgContent.text = ""
+        }
         //view.endEditing(true)
+    }
+    
+    @objc func leaveRoomButton(_sender: UIButton){
+        Socket.default.closeConnection()
+        self.navigationController?.popViewController(animated: true)
     }
 
     /*
@@ -250,6 +291,9 @@ class ChatViewController: UIViewController{
     */
     func addView(){
         //Portion of view in the bottom of the screen
+        view.addSubview(customNavigationBar)
+        customNavigationBar.addSubview(leaveRoom)
+        customNavigationBar.addSubview(roomNameNaviBar)
         view.addSubview(messageInputView)
         messageInputView.addSubview(msgContent)
         messageInputView.addSubview(sendButton)
@@ -261,8 +305,26 @@ class ChatViewController: UIViewController{
 
     */
     private func styleViews(){
+        
+        
+        
+        customNavigationBar.backgroundColor = .white
+        
+    
+        leaveRoom.setTitle("Leave", for: .normal)
+        leaveRoom.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 20)
+        leaveRoom.setTitleColor(#colorLiteral(red: 0.7007569624, green: 0.008493066671, blue: 0.0166539277, alpha: 1), for: .normal)
+        
+        roomNameNaviBar.text = roomName
+        roomNameNaviBar.textColor = #colorLiteral(red: 0.7007569624, green: 0.008493066671, blue: 0.0166539277, alpha: 1)
+        //roomNameNaviBar.backgroundColor = .gray
+        roomNameNaviBar.textAlignment = .center
+        roomNameNaviBar.font = UIFont(name:"Pacifico-Regular", size: 20)
+        
         sendButton.layer.cornerRadius = 12
         sendButton.titleLabel?.font = UIFont(name: "Pacifico-Regular", size: 15)
+        
+        //msgContent.textContainerInset = UIEdgeInsetsMake(<#T##top: CGFloat##CGFloat#>, <#T##left: CGFloat##CGFloat#>, <#T##bottom: CGFloat##CGFloat#>, <#T##right: CGFloat##CGFloat#>)
     }
 
     /* standardLayout func
@@ -276,10 +338,27 @@ class ChatViewController: UIViewController{
 
     private func standardLayout(){
 
+        customNavigationBar.translatesAutoresizingMaskIntoConstraints = false
+        customNavigationBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        customNavigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        customNavigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        customNavigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        customNavigationBar.bottomAnchor.constraint(equalTo: tableView.topAnchor).isActive = true
+        
+        leaveRoom.translatesAutoresizingMaskIntoConstraints = false
+        leaveRoom.leadingAnchor.constraint(equalTo: customNavigationBar.leadingAnchor).isActive = true
+        leaveRoom.topAnchor.constraint(equalTo: customNavigationBar.topAnchor).isActive = true
+        leaveRoom.bottomAnchor.constraint(equalTo: customNavigationBar.bottomAnchor).isActive = true
+        
+        roomNameNaviBar.translatesAutoresizingMaskIntoConstraints = false
+        roomNameNaviBar.centerXAnchor.constraint(equalTo: customNavigationBar.centerXAnchor).isActive = true
+        roomNameNaviBar.topAnchor.constraint(equalTo: customNavigationBar.topAnchor).isActive = true
+        roomNameNaviBar.bottomAnchor.constraint(equalTo: customNavigationBar.bottomAnchor).isActive = true
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: customNavigationBar.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: messageInputView.topAnchor).isActive = true
 
         messageInputView.translatesAutoresizingMaskIntoConstraints = false
