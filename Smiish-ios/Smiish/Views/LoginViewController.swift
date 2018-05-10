@@ -20,7 +20,6 @@ class LoginViewController: UIViewController{
     @IBOutlet weak var joinButton: UIButton!
     
     
-
     //Create UILabel Login Logo
     let loginLogo = UIImageView(image: #imageLiteral(resourceName: "smiishLogo"))
 
@@ -29,6 +28,37 @@ class LoginViewController: UIViewController{
 
         //hide Navigation Controller in Login VC
         self.navigationController?.isNavigationBarHidden = true
+        
+        //TODO: add socket.on "refresh"
+        //User Name Invalid in this chat room refresh
+        Socket.default.socket.on("refresh"){ (data, ack) in
+            //Prevent Segue to happen.
+            self.nameField.text = ""
+            Toast(text: "User Name already exists!").show()
+            ToastView.appearance().backgroundColor = .white
+            ToastView.appearance().textColor = #colorLiteral(red: 0.7007569624, green: 0.008493066671, blue: 0.0166539277, alpha: 1)
+            ToastView.appearance().font = UIFont(name: "Pacifico-Regular", size: 17)
+            Socket.default.closeConnection()
+        }
+        
+        //TODO: client response
+        // No Validation Require first one on the chat
+        Socket.default.socket.on("user join"){(data,ack) in
+            self.performSegue(withIdentifier: "Join Chat", sender: nil)
+            //self.connected = true
+            //Socket.default.socket.emit("clients in room")
+
+        }
+        
+        //Chat Room Exists and user has an unique name
+        Socket.default.socket.on("add new user"){ (data, ack) in
+            let args = ["username": self.nameField.text, "roomName": self.roomField.text]
+            //TODO: Socket.Emit "Add to room"
+            Socket.default.socket.emit("add to room",args)
+            
+            //self.performSegue(withIdentifier: "Join Chat", sender: nil)
+        }
+        
     }
 
     //What it does when login view controller moves to next segue
@@ -43,6 +73,11 @@ class LoginViewController: UIViewController{
 
         //Cancel all Toasters
         ToastCenter.default.cancelAll()
+        
+        //Cancel all Socket Handlers so there are no interference
+        Socket.default.socket.off("add new user")
+        Socket.default.socket.off("refresh")
+        Socket.default.socket.off("user join")
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -87,7 +122,7 @@ class LoginViewController: UIViewController{
         //No auto Suggestions 
         nameField.autocorrectionType = .no
         roomField.autocorrectionType = .no
-
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -130,7 +165,6 @@ class LoginViewController: UIViewController{
 
     //function provides the next view and passes some data to the next view.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
         if segue.identifier == "Join Chat"{
             if let cvc = segue.destination as? ChatViewController{
                 cvc.userName = nameField.text!

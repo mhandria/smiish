@@ -45,6 +45,9 @@ open class Socket{
         }
     }
     
+    func clientList(){
+    }
+    
     func closeConnection(){
         socket.disconnect()
     }

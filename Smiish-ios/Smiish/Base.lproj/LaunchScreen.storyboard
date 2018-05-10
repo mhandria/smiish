@@ -19,19 +19,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="smiish loading" translatesAutoresizingMaskIntoConstraints="NO" id="vdi-4e-sQY">
-                                <rect key="frame" x="87" y="224" width="201" height="93"/>
+                                <rect key="frame" x="87" y="224" width="201" height="113"/>
                             </imageView>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="awI-Z5-SLv">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="SOv-4N-xcZ">
                                 <rect key="frame" x="177" y="325" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.65924546632124348" green="0.0" blue="0.030684606223018208" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="vdi-4e-sQY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="204" id="Umg-Yc-0oe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vdi-4e-sQY" secondAttribute="trailing" constant="87" id="WhB-3g-ttQ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="SOv-4N-xcZ" secondAttribute="trailing" constant="178" id="Wyl-Ga-OEM"/>
                             <constraint firstItem="vdi-4e-sQY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="87" id="k0x-Eh-Ovd"/>
+                            <constraint firstItem="SOv-4N-xcZ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="177" id="lhX-LP-ijl"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vdi-4e-sQY" secondAttribute="bottom" constant="350" id="mmP-Qy-yc8"/>
+                            <constraint firstItem="SOv-4N-xcZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="350" id="uzA-QN-Ag0"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="SOv-4N-xcZ" secondAttribute="bottom" constant="300" id="zcE-Kn-dky"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

@@ -82,7 +82,6 @@
                                 </state>
                                 <connections>
                                     <action selector="joinRoom:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WXm-1a-Rha"/>
-                                    <segue destination="jja-WU-MhT" kind="show" identifier="Join Chat" id="2iJ-Iv-Tfs"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -95,6 +94,7 @@
                         <outlet property="joinButton" destination="g7m-o7-Q3a" id="z3q-FE-kzx"/>
                         <outlet property="nameField" destination="IfK-K1-wtz" id="GVe-Ko-wsJ"/>
                         <outlet property="roomField" destination="sLI-QU-9zG" id="0L2-v1-rV3"/>
+                        <segue destination="jja-WU-MhT" kind="show" identifier="Join Chat" id="Mgq-hd-la7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

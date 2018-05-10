@@ -9,6 +9,7 @@
 import UIKit
 import UserNotifications
 import Toaster
+//import SocketIO
 
 //struct to hold the message data coming in
 struct Messages{
@@ -25,7 +26,6 @@ struct Messages{
 
 class ChatViewController: UIViewController{
 
-
     //holds the app user's data of roomname that
     //he/she is in and the username he/she selected
     var userName: String = ""
@@ -36,6 +36,9 @@ class ChatViewController: UIViewController{
     let notification = UNMutableNotificationContent()
 
     var messages = [Messages]()
+    
+    var clientList = [String]()
+
 
     @IBOutlet weak var sendButton: UIButton!
     
@@ -94,6 +97,8 @@ class ChatViewController: UIViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Socket.default.socket.emit("clients in room")
 
         //reset badge for notifications
         ChatViewController.messageBadge = 0
@@ -134,7 +139,9 @@ class ChatViewController: UIViewController{
         
         msgContent.autocorrectionType = .no
         
-
+        
+        //Call clients in room to api
+        //Socket.default.socket.emit("clients in room")
 
         //socket event
         Socket.default.socket.on("chat message") { (data, ack) in
@@ -144,15 +151,93 @@ class ChatViewController: UIViewController{
               }
           }
         }
+        
+        //TODO: add Socket.on "get clients"
+        Socket.default.socket.on("get clients"){ (data, ack) in
 
+//            let name = data["username"]
+            let dict = data[0] as? NSMutableDictionary
+                // IT IS NOT REACHING THIS POINT!!!!!!!!!
+            let name = dict?["username"]
+            let room = dict?["roomName"]
+            let id  =  dict?["id"]
+            let valid = dict?["userValidation"] as? Int
+            print(self.clientList)
+            print("Validate3")
+            let res = ["username":name, "roomName": room, "id":id,"clientList":self.clientList]
+//            if let validate = dict?["userValidation"] {
+            if(valid == 1){
+                print("Validate5")
+                //New User Joined Perform validation on user name with client list
+                Socket.default.socket.emit("client list", res)
+            }else{
+                //Use this to make client list
+                print("Test client list clear")
+                print(self.clientList)
+                self.clientList.removeAll()
+                print("Clear")
+                print(self.userName)
+                Socket.default.socket.emit("present", ["username": self.userName])
+                print("False")
+            }
+//            }
+        }
+        
+        //Chat Room Exists and user has an unique name
+        Socket.default.socket.on("add new user"){ (data, ack) in
+            let args = ["username": self.userName, "roomName": self.roomName]
+            //TODO: Socket.Emit "Add to room"
+            Socket.default.socket.emit("add to room",args)
+        }
+        
+        //Show new user has joined
         Socket.default.socket.on("new user"){ (data, ack) in
-            print("\(data)")
             if let dict = data[0] as? NSMutableDictionary{
                 if let name = dict["username"], let numUser = dict["numUsers"]{
-                    Toast(text: "\(name)has joined the room with: \(numUser) users").show()
+                    Toast(text: "\(name ) has joined the room with: \(numUser) users").show()
+                    ToastView.appearance().backgroundColor = .white
+                    ToastView.appearance().textColor = #colorLiteral(red: 0.7007569624, green: 0.008493066671, blue: 0.0166539277, alpha: 1)
+                    ToastView.appearance().font = UIFont(name: "Pacifico-Regular", size: 13)
                 }
             }
         }
+        //TODO: user Join
+        Socket.default.socket.on("user join"){ (data,ack) in
+            print("USER JOINED")
+            print(self.clientList)
+            if let dict = data[0] as? Dictionary<String, String>{
+                if let name = dict["username"], let room = dict["roomName"]{
+                    Toast(text: "\(name) has joined the room with: \(room) users").show()
+                    ToastView.appearance().backgroundColor = .white
+                    ToastView.appearance().textColor = #colorLiteral(red: 0.7007569624, green: 0.008493066671, blue: 0.0166539277, alpha: 1)
+                    ToastView.appearance().font = UIFont(name: "Pacifico-Regular", size: 13)
+                
+                }
+            }
+            Socket.default.socket.emit("clients in room")
+        }
+        //TODO: clientList
+        
+        //TODO: client response - adds the username into the clientList and add Toast for who joined
+        Socket.default.socket.on("client response"){(data,ack) in
+            print("1")
+            print(data)
+            if let dict = data[0] as? NSMutableDictionary{
+                print(dict)
+                print("2")
+                if let name = dict["username"]{
+                    //append to the clientList
+                    print("client response")
+                    self.clientList.append(name as! String)
+                    print(self.clientList)
+                }
+            }
+
+        }
+        
+        Socket.default.socket.emit("clients in room")
+
+        
         // Do any additional setup after loading the view.
     }
 
@@ -161,7 +246,7 @@ class ChatViewController: UIViewController{
         if bottomConstraint?.constant == 0{
             //Check if Iphone X
             if #available(iOS 11.0, *) {
-                 bottomConstraint?.constant = -keyboardSize!.height //- 25
+                 bottomConstraint?.constant = -keyboardSize!.height // - 25
             }else{
                  bottomConstraint?.constant = -keyboardSize!.height
             }
@@ -204,6 +289,7 @@ class ChatViewController: UIViewController{
         Socket.default.socket.emit("disconnect")
         Socket.default.socket.off("chat message")
         Socket.default.socket.off("new user")
+        Socket.default.socket.off("get clients")
     }
 
     /*

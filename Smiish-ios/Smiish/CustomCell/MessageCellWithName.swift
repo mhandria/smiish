@@ -34,11 +34,11 @@ class MessageCellWithName: UITableViewCell {
         self.message.text = msg
         
         if(name == senderName){
-            message.backgroundColor = #colorLiteral(red: 0.3938970864, green: 0.5906907916, blue: 1, alpha: 0.970267715)
+            message.backgroundColor = #colorLiteral(red: 0.3921568627, green: 0.5921568627, blue: 1, alpha: 0.970267715)
             message.textColor = UIColor.white
         }else{
-            message.backgroundColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
-            message.textColor = #colorLiteral(red: 0.2605174184, green: 0.2605243921, blue: 0.260520637, alpha: 1)
+            message.backgroundColor = #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
+            message.textColor = #colorLiteral(red: 0.2588235294, green: 0.2588235294, blue: 0.2588235294, alpha: 1)
         }
     }
 
