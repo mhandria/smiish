@@ -246,7 +246,7 @@ class ChatViewController: UIViewController{
         if bottomConstraint?.constant == 0{
             //Check if Iphone X
             if #available(iOS 11.0, *) {
-                 bottomConstraint?.constant = -keyboardSize!.height // - 25
+                 bottomConstraint?.constant = -keyboardSize!.height  - 25
             }else{
                  bottomConstraint?.constant = -keyboardSize!.height
             }
