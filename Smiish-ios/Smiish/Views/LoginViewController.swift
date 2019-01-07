@@ -104,7 +104,7 @@ class LoginViewController: UIViewController{
         /*
         SMIISH LOGO IMAGE
          */
-        view.addSubview(loginLogo)
+        addView()
 
         //Add Standard Constraint without KeyBoard
         configureLayout()
@@ -173,7 +173,7 @@ class LoginViewController: UIViewController{
         }
     }
 
-    private func addSubview(){
+    private func addView(){
         view.addSubview(loginLogo)
     }
 
