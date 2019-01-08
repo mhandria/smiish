@@ -13,4 +13,3 @@ our mobile application that was built using swift and the CocoaPod package/libra
 * Michael Handria
 * Scott Nguyen
 * Abdulalim Yakoub
-

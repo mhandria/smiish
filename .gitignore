@@ -1,5 +1,6 @@
 
-Smiish-api/node_modules
+# Don't include node module.js
+/node_module/
 
 .DS_Store
 
